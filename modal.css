@@ -11,10 +11,9 @@
 /* Landing Page */
 
 body {
-  margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
+  /*background-image: url("background.png");*/
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -33,12 +32,17 @@ img {
 .topnav {
   overflow: hidden;
   margin: 3.5%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 .header-logo {
     float: left;
 }
 .main-navbar {
     float: right;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .topnav a {
   float: left;
@@ -69,6 +73,12 @@ img {
 }
 
 @media screen and (max-width: 768px) {
+  .main-navbar {
+    position: fixed;
+    z-index: 69;
+    right: 10px;
+    background: white;
+  }
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
@@ -97,7 +107,6 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
   }
 } 
 
@@ -120,7 +129,7 @@ main {
   background: #fe142f;
   display: flex;
   margin: auto;
-  padding: 2em;
+  /*padding: 2em;*/
   color: #fff;
   padding: 0.75rem 2.5rem;
   border-radius: 1rem;
@@ -197,7 +206,7 @@ label {
 }
 input {
   padding: 8px;
-  border: 0.8px solid #ccc;
+  border: 1px solid #ccc;
   outline: none;
 }
 .text-control {
@@ -336,7 +345,7 @@ input[data-error]::after {
 /* custom select styles */
 .custom-select {
   position: relative;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   font-size: 1.1rem;
   font-weight: normal;
 }
@@ -373,8 +382,8 @@ input[data-error]::after {
 .select-selected {
   color: #000;
   padding: 11px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  /*border: 1px solid transparent;*/
+  /*border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;*/
   cursor: pointer;
   border-radius: 8px;
   height: 48px;
@@ -405,7 +414,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  /*min-height: 93vh;*/
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -451,8 +460,7 @@ input[data-error]::after {
   text-transform: capitalize;
   font-size: 1.3rem;
   padding: 15px 23px;
-  margin: 0;
-  margin-top: 59px;
+  margin: 59px 0 0;
 }
 .hero-img {
   grid-column: span 8;
