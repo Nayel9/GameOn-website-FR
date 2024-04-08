@@ -192,9 +192,19 @@ main {
   padding-top: 10px;
 }
 
-.modal-body {
+.modal-body{
   padding: 15px 8%;
   margin: 15px auto;
+}
+.modal-body--over{
+  display: none;
+  flex-direction: column;
+}
+.modal-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 300px 0 300px 0;
 }
 
 label {
