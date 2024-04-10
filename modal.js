@@ -30,15 +30,22 @@ function launchModal() {
 let closebtn = document.querySelector(" .close")
 closebtn.addEventListener("click", closeModal)
 
-//Cette fonction est utilisée pour fermer la fenêtre modale.
-// Elle modifie la propriété CSS "display" de modalbg à "none",
-// ce qui rend l'élément invisible.
+
 function closeModal() {
   modalbg.style.display = "none"
+  let form = document.querySelector("form")
+  form.reset()
 }
 
-//Cette fonction est utilisée pour réinitialiser et fermer la fenêtre modale.
-// Elle appelle closeModal et réinitialise le formulaire.
+document.addEventListener('DOMContentLoaded', () => {
+  // Sélection du formulaire
+  let form = document.querySelector("form");
+  // Réinitialisation du formulaire
+  form.reset();
+});
+/**
+ * Réinitialise et ferme la fenêtre modale.
+ */
 function resetCloseModal() {
   modalbg.style.display = "none"
   document.querySelector(".modal-body").style.display = "block"
@@ -51,9 +58,11 @@ let closeform = document.querySelector(" .btn-close")
 closeform.addEventListener("click", resetCloseModal)
 
 //Cette fonction est utilisée pour afficher un message d'erreur.
-// Elle prend en paramètre un message et un identifiant d'élément,
-// crée un nouvel élément span, lui attribue le message d'erreur et
-// l'ajoute à l'élément avec l'identifiant spécifié.
+/**
+ * Affiche un message d'erreur.
+ * @param {string} message - Le message d'erreur à afficher.
+ * @param {string} elementId - L'identifiant de l'élément où afficher le message d'erreur.
+ */
     function afficherMessageErreur(message, elementId) {
   let spanErreurMessage = document.getElementById("erreurMessage-" + elementId)
   let element = document.getElementById(elementId)
@@ -64,11 +73,11 @@ closeform.addEventListener("click", resetCloseModal)
       let label = document.querySelector(`label[for=${elementId}]`)
       label.style.display = "block" // Force le label à prendre toute la width du parent ce qui permet de passer à la ligne
       label.insertAdjacentElement('afterend', spanErreurMessage)// Insère le message d'erreur juste apres la checkbox au lieu de la fin de la balise formdata
-    }else if (elementId === "radio") { // Verifie si l'element est radio
+    } else if (elementId === "radio") { // Verifie si l'element est radio
       let formDataRadio = document.getElementById("radio")
       formDataRadio.style.display = "block"
       formDataRadio.insertAdjacentElement('afterend', spanErreurMessage)// Insère le message d'erreur à la fin de la div "formData" pour le radio
-    }else {
+    } else {
       element.parentElement.append(spanErreurMessage)// Insère le message d'erreur à la fin de l'élément parent
     }
   }
@@ -81,9 +90,10 @@ closeform.addEventListener("click", resetCloseModal)
   element.style.borderWidth = "2px"
 }
 
-//Cette fonction est utilisée pour supprimer un message d'erreur.
-// Elle prend en paramètre un identifiant d'élément,
-// trouve l'élément avec cet identifiant et le supprime.
+/**
+ * Supprime un message d'erreur.
+ * @param {string} elementId - L'identifiant de l'élément où supprimer le message d'erreur.
+ */
 function removeErrorMessage(elementId) {
   let element = document.getElementById(elementId)
   let spanErreurMessage = document.getElementById("erreurMessage-" + elementId)
@@ -96,10 +106,11 @@ function removeErrorMessage(elementId) {
 }
 // Fonctions de validation pour chaque champ du formulaire
 
-//Cette fonction est utilisée pour valider le prénom.
-// Elle supprime tout message d'erreur précédent et
-// vérifie si la longueur du prénom est inférieure à 2.
-// Si c'est le cas, elle lance une exception avec un message d'erreur.
+/**
+ * Valide le prénom.
+ * @param {string} prenom - Le prénom à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateFirstName(prenom) {
   removeErrorMessage("first")
   if (prenom.length < 2) {
@@ -107,10 +118,11 @@ function validateFirstName(prenom) {
   }
 }
 
-//Cette fonction est utilisée pour valider le nom.
-// Elle supprime tout message d'erreur précédent et
-// vérifie si la longueur du prénom est inférieure à 2.
-// Si c'est le cas, elle lance une exception avec un message d'erreur.
+/**
+ * Valide le nom.
+ * @param {string} nom - Le nom à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateLastName(nom) {
   removeErrorMessage("last")
   if (nom.length < 2) {
@@ -118,6 +130,11 @@ function validateLastName(nom) {
   }
 }
 
+/**
+ * Valide l'email.
+ * @param {string} email - L'email à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateEmail(email) {
   removeErrorMessage("email")
   let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -126,6 +143,11 @@ function validateEmail(email) {
   }
 }
 
+/**
+ * Valide la date de naissance.
+ * @param {string} date - La date de naissance à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateBirthdate(date) {
   removeErrorMessage("birthdate")
   let selectedDate = new Date(date)// Crée un objet Date à partir de la date de naissance
@@ -136,18 +158,15 @@ function validateBirthdate(date) {
   currentDate.setHours(0,0,0,0)
 
   // Calcule l'âge
-  let age = currentDate.getFullYear() - selectedDate.getFullYear()// Calcule l'année
-  let m = currentDate.getMonth() - selectedDate.getMonth()// Calcule le mois
+  let age = currentDate.getFullYear() - selectedDate.getFullYear()// Calcule le nombre d'années complètes
+  let m = currentDate.getMonth() - selectedDate.getMonth()// Calcule la position du mois de naissance par rapport au mois actuel
   //Cette condition vérifie si l'utilisateur a déjà eu son anniversaire cette année.
-  // Si le mois actuel est inférieur au mois de naissance (m < 0) ou
-  // si le mois actuel est le même que le mois de naissance mais que le jour actuel est inférieur au jour de naissance,
+  // Si (m < 0) ou si le mois actuel est le même que le mois de naissance et que la date actuelle est inférieur a la date de naissance,
   // alors l'utilisateur n'a pas encore eu son anniversaire cette année et l'âge est décrémenté de 1
   if (m < 0 || (m === 0 && currentDate.getDate() < selectedDate.getDate())) {
     age--//Décrémente l'âge de 1
   }
-  //Cette condition vérifie si la date de naissance entrée par l'utilisateur est valide.
-  // Si la date de naissance est dans le futur ou si aucun date n'a été entrée,
-  // une exception est lancée avec un message d'erreur indiquant que l'utilisateur doit entrer une date de naissance valide.
+
   if (selectedDate > currentDate || date === "") {
     throw { message: "Merci de saisir une date de naissance valide. ", elementId: "birthdate"}
   //Cette condition vérifie si l'utilisateur a au moins 18 ans.
@@ -158,6 +177,11 @@ function validateBirthdate(date) {
   }
 }
 
+/**
+ * Valide la quantité de tournois.
+ * @param {string} quantityValue - La quantité de tournois à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateQuantity(quantityValue) {
   removeErrorMessage("quantity")
   if (quantityValue === "") {
@@ -165,6 +189,11 @@ function validateQuantity(quantityValue) {
   }
 }
 
+/**
+ * Valide le choix de la ville.
+ * @param {string} radioValue - Le choix de la ville à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validateRadio(radioValue) {
   removeErrorMessage("radio")
   if (radioValue === "") {
@@ -172,6 +201,11 @@ function validateRadio(radioValue) {
   }
 }
 
+/**
+ * Valide l'acceptation des conditions générales d'utilisation.
+ * @param {Object} requiredCheckbox - L'élément checkbox à valider.
+ * @throws {Object} Une exception avec un message d'erreur et l'identifiant de l'élément si la validation échoue.
+ */
 function validerCheckboxCgu(requiredCheckbox) {
   removeErrorMessage("checkbox1")
   if (requiredCheckbox.checked !== true) {
@@ -179,47 +213,47 @@ function validerCheckboxCgu(requiredCheckbox) {
   }
 }
 
-// Gestion de l'événement submit sur le formulaire de contact.
-//Cette ligne ajoute un écouteur d'événements à l'événement "submit". Lorsque le formulaire est soumis,
-// la fonction anonyme est appelée.
+/**
+ * Gère le formulaire en récupérant les valeurs de chaque champ du formulaire, effectue des validations sur ces valeurs et renvoie un tableau d'erreurs.
+ * @returns {Array} Un tableau contenant les erreurs de validation.
+ */
 addEventListener("submit", (event) => {
   event.preventDefault()
     // Cette ligne appelle la fonction gererFormulaire() qui effectue des validations sur les données du formulaire
   // et renvoie un tableau d'erreurs. Si le tableau est vide, cela signifie qu'il n'y a pas d'erreurs.
   let errors = gererFormulaire()
 
-  // Cette partie du code crée un objet JavaScript pour stocker les données du formulaire.
-  // Chaque propriété de l'objet correspond à un champ du formulaire.
-  let formulaireData = {
-    prenom: document.getElementById("first").value,
-    nom: document.getElementById("last").value,
-    email: document.getElementById("email").value,
-    date: document.getElementById("birthdate").value,
-    quantityValue: document.getElementById("quantity").value,
-    radioValue: document.querySelector("input[type=radio]:checked").value,
-    requiredCheckbox: document.getElementById("checkbox1").checked
-  }
 
-  // Cette ligne convertit l'objet JavaScript en une chaîne JSON pour un stockage facile.
-  let formulaireDataJson = JSON.stringify(formulaireData)
-
-  // Cette ligne stocke la chaîne JSON dans le stockage local du navigateur.
-  // Cela permet de conserver les données du formulaire même si l'utilisateur ferme le navigateur.
-  localStorage.setItem("formulaireData", formulaireDataJson)
-
-  // Cette ligne affiche la chaîne JSON dans la console pour vérification.
-  console.log(formulaireDataJson)
-
-  //Cette condition vérifie si le tableau d'erreurs est vide.
-  // Si c'est le cas, cela signifie que toutes les validations ont réussi et
-  // le code à l'intérieur du bloc if est exécuté.
-  // Ce code modifie les propriétés CSS "display" de certains éléments div pour afficher ou cacher certaines parties de l'interface utilisateur.
   if (errors.length === 0) {
     // Modifier les propriétés CSS "display" des éléments div concernés
     document.querySelector(".modal-body").style.display = "none"
     document.querySelector(".modal-body--over").style.display = "flex"
+
+    // Cette partie du code crée un objet JavaScript pour stocker les données du formulaire.
+    // Chaque propriété de l'objet correspond à un champ du formulaire.
+    let formulaireData = {
+      prenom: document.getElementById("first").value,
+      nom: document.getElementById("last").value,
+      email: document.getElementById("email").value,
+      date: document.getElementById("birthdate").value,
+      quantityValue: document.getElementById("quantity").value,
+      radioValue: document.querySelector("input[type=radio]:checked").value,
+      requiredCheckbox: document.getElementById("checkbox1").checked
+    }
+
+    // Cette ligne convertit l'objet JavaScript en une chaîne JSON pour un stockage facile.
+    let formulaireDataJson = JSON.stringify(formulaireData)
+
+    // Cette ligne stocke la chaîne JSON dans le stockage local du navigateur.
+    // Cela permet de conserver les données du formulaire même si l'utilisateur ferme le navigateur.
+    localStorage.setItem("formulaireData", formulaireDataJson)
+
+    // Cette ligne affiche la chaîne JSON dans la console pour vérification.
+    console.log(formulaireDataJson)
+
   }
 })
+
 // Cette fonction est utilisée pour gérer le formulaire.
 // Elle récupère les valeurs de chaque champ du formulaire,
 // effectue des validations sur ces valeurs et renvoie un tableau d'erreurs.
@@ -296,3 +330,6 @@ function gererFormulaire() {
   // quelles erreurs se sont produites lors de la validation du formulaire.
   return errors
 }
+document.getElementById('quantity').addEventListener('input', function (e) {
+  e.target.value = e.target.value.replace(/\D/g, '');
+});
