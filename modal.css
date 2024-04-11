@@ -501,7 +501,10 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
+  .bground{
+    z-index: 999;
+  }
   .hero-section {
     display: block;
     box-shadow: unset;
