@@ -513,6 +513,7 @@ footer {
     background: #fff;
     color: #000;
     padding: 20px;
+    min-width: inherit;
   }
   .hero-content::after {
     content: unset;
